@@ -1,0 +1,115 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String     @id @default(cuid())
+  email     String     @unique
+  name      String
+  password  String
+  school    String
+  city      String
+  phone     String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  bookings  Booking[]
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  password  String
+  role      String   @default("admin") // admin, superadmin
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Booking {
+  id            String   @id @default(cuid())
+  userId        String?
+  user          User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  locationId    String
+  name          String
+  email         String
+  schoolName    String
+  guests        Int
+  preferredDate DateTime
+  status        String   @default("pending") // pending, confirmed, contacted, completed, rejected
+  notes         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([locationId])
+  @@index([email])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model Location {
+  id                  String          @id @default(cuid())
+  name                String
+  city                String
+  district            String
+  featured            Boolean         @default(false)
+  placementLabel      String
+  urgencyLabel        String
+  venueType           String
+  featuredBadge       String
+  address             String
+  capacity            Int
+  minimumGuests       Int
+  pricePerPerson      Float
+  description         String
+  idealFor            String
+  website             String
+  bookingLink         String
+  contactEmail        String
+  contactPhone        String
+  features            String          // JSON array
+  includedServices    String          // JSON array
+  styleTags           String          // JSON array
+  images              String          // JSON array
+  schoolsBooked       Int             @default(0)
+  isPopularWithSchools Boolean        @default(false)
+  isQuicklyBooked     Boolean         @default(false)
+  lastVerified        DateTime?       // When price was last verified
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+  priceHistory        PriceHistory[]
+
+  @@index([city])
+  @@index([featured])
+  @@index([lastVerified])
+}
+
+model SocialProofMetric {
+  id                  String   @id @default(cuid())
+  locationId          String   @unique
+  schoolsBooked       Int      @default(0)
+  isPopularWithSchools Boolean @default(false)
+  isQuicklyBooked     Boolean  @default(false)
+  updatedAt           DateTime @updatedAt
+}
+
+model PriceHistory {
+  id            String   @id @default(cuid())
+  locationId    String
+  location      Location @relation(fields: [locationId], references: [id], onDelete: Cascade)
+  oldPrice      Float
+  newPrice      Float
+  reason        String?  // e.g., "venue update", "market adjustment", "manual verification"
+  verifiedBy    String?  // admin email who verified the change
+  createdAt     DateTime @default(now())
+
+  @@index([locationId])
+  @@index([createdAt])
+}
