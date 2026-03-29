@@ -1,4 +1,5 @@
 import { Navbar } from "@/components/navbar";
+import Link from "next/link";
 
 export const metadata = {
   title: "Datenschutz - Abiball Planer",
@@ -9,42 +10,97 @@ export default function PrivacyPage() {
   return (
     <>
       <Navbar />
-      <main className="mx-auto max-w-4xl px-6 py-12">
-        <h1 className="text-4xl font-bold mb-6">Datenschutz (Privacy Policy)</h1>
-        <div className="prose prose-slate max-w-none">
-          <h2 className="text-2xl font-semibold mt-8 mb-4">Datenschutzerklärung</h2>
-          
-          <h3 className="text-xl font-semibold mt-6 mb-2">1. Verantwortlicher</h3>
-          <p className="text-slate-600">
-            Abiball Planer<br />
-            [Your Company Address]
-          </p>
+      <main className="pt-24 px-5 sm:px-8 lg:px-10 pb-20">
+        <div className="mx-auto max-w-3xl">
+          <div className="mb-12">
+            <h1 className="text-5xl font-bold text-slate-900 mb-4">Datenschutzerklärung</h1>
+            <p className="text-slate-600">
+              Zuletzt aktualisiert: März 2026
+            </p>
+          </div>
 
-          <h3 className="text-xl font-semibold mt-6 mb-2">2. Erhobene Daten</h3>
-          <p className="text-slate-600">
-            Wir erheben und verarbeiten folgende personenbezogene Daten:
-          </p>
-          <ul className="list-disc pl-6 text-slate-600 space-y-1">
-            <li>Name und E-Mail-Adresse (bei Buchungsanfragen)</li>
-            <li>Schulname (bei Buchungsanfragen)</li>
-            <li>Gästezahl und Budget (Suchfilter)</li>
-            <li>Bevorzugte Veranstaltungsdatum</li>
-          </ul>
+          <div className="space-y-8">
+            <section className="rounded-2xl border border-slate-200 bg-white p-8">
+              <h2 className="text-2xl font-bold text-slate-900 mb-4">1. Verantwortlicher</h2>
+              <p className="text-slate-600 mb-4">
+                <strong>Abiball Planer</strong><br />
+                [Deine Adresse]<br />
+                [Deine Stadt]
+              </p>
+              <p className="text-slate-600">
+                E-Mail: <a href="mailto:info@abiball-planer.de" className="text-blue-600 hover:underline">info@abiball-planer.de</a>
+              </p>
+            </section>
 
-          <h3 className="text-xl font-semibold mt-6 mb-2">3. Verwendung der Daten</h3>
-          <p className="text-slate-600">
-            Ihre Daten werden ausschließlich zur Verarbeitung Ihrer Buchungsanfrage verwendet.
-          </p>
+            <section className="rounded-2xl border border-slate-200 bg-white p-8">
+              <h2 className="text-2xl font-bold text-slate-900 mb-4">2. Erhobene Daten</h2>
+              <p className="text-slate-600 mb-4">
+                Wir erheben und verarbeiten folgende personenbezogene Daten:
+              </p>
+              <ul className="space-y-2 text-slate-600">
+                <li className="flex items-start gap-3">
+                  <span className="text-blue-600 mt-1">•</span>
+                  <span><strong>Name und E-Mail-Adresse</strong> (bei Buchungsanfragen)</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-blue-600 mt-1">•</span>
+                  <span><strong>Schulname</strong> (bei Buchungsanfragen)</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-blue-600 mt-1">•</span>
+                  <span><strong>Gästezahl und Budget</strong> (Suchfilter)</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-blue-600 mt-1">•</span>
+                  <span><strong>Bevorzugte Veranstaltungsdatum</strong></span>
+                </li>
+              </ul>
+            </section>
 
-          <h3 className="text-xl font-semibold mt-6 mb-2">4. Datenschutzrechte</h3>
-          <p className="text-slate-600">
-            Sie haben das Recht auf Auskunft, Berichtigung, Löschung und Widerspruch gegen die Verarbeitung Ihrer personenbezogenen Daten.
-          </p>
+            <section className="rounded-2xl border border-slate-200 bg-white p-8">
+              <h2 className="text-2xl font-bold text-slate-900 mb-4">3. Verwendung der Daten</h2>
+              <p className="text-slate-600">
+                Ihre Daten werden ausschließlich zur Verarbeitung Ihrer Buchungsanfrage verwendet. 
+                Wir geben Ihre Daten nicht an Dritte weiter, außer an die von Ihnen gewählte Venue, 
+                um Ihre Buchungsanfrage zu bearbeiten.
+              </p>
+            </section>
 
-          <h3 className="text-xl font-semibold mt-6 mb-2">5. Kontakt</h3>
-          <p className="text-slate-600">
-            Bei Fragen zum Datenschutz kontaktieren Sie uns bitte unter [your contact email].
-          </p>
+            <section className="rounded-2xl border border-slate-200 bg-white p-8">
+              <h2 className="text-2xl font-bold text-slate-900 mb-4">4. Datenschutzrechte</h2>
+              <p className="text-slate-600 mb-4">
+                Sie haben das Recht auf:
+              </p>
+              <ul className="space-y-2 text-slate-600">
+                <li className="flex items-start gap-3">
+                  <span className="text-blue-600 mt-1">•</span>
+                  <span><strong>Auskunft</strong> über Ihre personenbezogenen Daten</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-blue-600 mt-1">•</span>
+                  <span><strong>Berichtigung</strong> unrichtiger Daten</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-blue-600 mt-1">•</span>
+                  <span><strong>Löschung</strong> Ihrer Daten</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-blue-600 mt-1">•</span>
+                  <span><strong>Widerspruch</strong> gegen die Verarbeitung</span>
+                </li>
+              </ul>
+            </section>
+
+            <section className="rounded-2xl border border-blue-200 bg-blue-50 p-8">
+              <h2 className="text-2xl font-bold text-slate-900 mb-4">5. Kontakt zum Datenschutz</h2>
+              <p className="text-slate-600 mb-4">
+                Bei Fragen zum Datenschutz oder um Ihre Rechte auszuüben, kontaktieren Sie uns bitte unter:
+              </p>
+              <p className="text-slate-600">
+                <strong>E-Mail:</strong> <a href="mailto:datenschutz@abiball-planer.de" className="text-blue-600 hover:underline">datenschutz@abiball-planer.de</a>
+              </p>
+            </section>
+          </div>
         </div>
       </main>
     </>
