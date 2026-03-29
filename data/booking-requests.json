@@ -1,5 +1,16 @@
 [
   {
+    "id": "lead_1774736303501",
+    "locationId": "hamburg-hafen-2-event-center",
+    "locationName": "Hafen 2 Event Center",
+    "name": "Kolja Krumbacher",
+    "email": "kolja@krumbacher.net",
+    "schoolName": "Brecht-Gymnasium Hamburg",
+    "guests": 450,
+    "preferredDate": "2026-06-25",
+    "createdAt": "2026-03-28T22:18:23.501Z"
+  },
+  {
     "id": "lead_1774538266984",
     "locationId": "schuppen-52",
     "locationName": "Schuppen 52",

@@ -46,6 +46,7 @@ export function BookingRequestButton({
     setIsOpen(false);
     setIsSubmitting(false);
     setError(null);
+    setForm({ ...emptyState, guests: initialGuests });
   }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {

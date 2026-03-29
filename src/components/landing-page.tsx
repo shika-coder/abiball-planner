@@ -67,7 +67,7 @@ export function LandingPage() {
                 </button>
               </Link>
               <button className="px-8 py-4 text-lg font-semibold rounded-xl border-2 border-slate-300 text-slate-900 hover:border-slate-400 transition duration-300 hover:scale-105 active:scale-95 w-full sm:w-auto">
-                So funktioniert's
+                So funktioniert&apos;s
               </button>
             </div>
           </motion.div>
@@ -82,7 +82,7 @@ export function LandingPage() {
             {...fadeInUp}
           >
             <h2 className="text-4xl md:text-5xl font-bold text-slate-950 mb-4">
-              So funktioniert's
+              So funktioniert&apos;s
             </h2>
             <p className="text-xl text-slate-600">
               3 einfache Schritte zum perfekten Abiball
@@ -344,7 +344,7 @@ export function LandingPage() {
             </p>
 
             <Link href="/app">
-              <button className="primary-button px-10 py-5 text-xl font-semibold rounded-xl transition duration-300 hover:scale-105 active:scale-95">
+              <button className="primary-button px-10 py-5 text-xl font-semibold rounded-xl transition duration-300 hover:scale-105 active:scale-95 mt-8">
                 Abiball planen
               </button>
             </Link>
@@ -374,7 +374,7 @@ export function LandingPage() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-slate-600 hover:text-slate-900">
+                  <Link href="/pricing" className="text-slate-600 hover:text-slate-900">
                     Pricing
                   </Link>
                 </li>
@@ -390,7 +390,7 @@ export function LandingPage() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-slate-600 hover:text-slate-900">
+                  <Link href="/blog" className="text-slate-600 hover:text-slate-900">
                     Blog
                   </Link>
                 </li>
@@ -401,12 +401,12 @@ export function LandingPage() {
               <h4 className="font-semibold text-slate-900 mb-4">Legal</h4>
               <ul className="space-y-2 text-sm">
                 <li>
-                  <Link href="#" className="text-slate-600 hover:text-slate-900">
+                  <Link href="/privacy" className="text-slate-600 hover:text-slate-900">
                     Datenschutz
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-slate-600 hover:text-slate-900">
+                  <Link href="/impressum" className="text-slate-600 hover:text-slate-900">
                     Impressum
                   </Link>
                 </li>

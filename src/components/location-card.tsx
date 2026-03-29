@@ -21,7 +21,6 @@ type Props = {
   hasCapacity?: boolean;
   onToggleFavorite: (id: string) => void;
   onToggleCompare: (id: string) => void;
-  onQuickView: (id: string) => void;
 };
 
 export function LocationCard({
@@ -36,8 +35,7 @@ export function LocationCard({
   matchTag,
   hasCapacity,
   onToggleFavorite,
-  onToggleCompare,
-  onQuickView
+  onToggleCompare
 }: Props) {
   const status = getBudgetStatus(location, guests, totalBudget, budgetPerPerson);
   const valueScore = getValueScore(location);
@@ -179,13 +177,6 @@ export function LocationCard({
             label="Jetzt anfragen"
             className="primary-button rounded-lg px-3 py-2 text-xs font-bold transition duration-300 active:scale-[0.98] w-full"
           />
-          <button
-            type="button"
-            onClick={() => onQuickView(location.id)}
-            className="secondary-button rounded-lg px-3 py-2 text-xs font-semibold transition duration-300 active:scale-[0.98]"
-          >
-            Verfügbarkeit
-          </button>
           <div className="flex gap-1">
             <button
               type="button"

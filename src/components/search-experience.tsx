@@ -6,7 +6,6 @@ import { AnimatePresence } from "framer-motion";
 import { scoreAllVenues, getTopRecommendations, getMatchTag } from "@/lib/venue-scorer";
 import { CompareDrawer } from "@/components/compare-drawer";
 import { PreferenceFlow } from "@/components/preference-flow";
-import { QuickViewModal } from "@/components/quick-view-modal";
 import { RecommendationResults } from "@/components/recommendation-results";
 import { StickyCTABar } from "@/components/sticky-cta-bar";
 import { locations as baseLocations, supportedCities } from "@/data/locations";
@@ -97,7 +96,6 @@ export function SearchExperience() {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [compareIds, setCompareIds] = useState<string[]>([]);
   const [customLocations, setCustomLocations] = useState<Location[]>([]);
-  const [quickViewId, setQuickViewId] = useState<string | null>(null);
 
   const defaultPreferences: Preferences = {
     city: supportedCities[0],
@@ -137,18 +135,10 @@ export function SearchExperience() {
     () => locations.filter((location) => compareIds.includes(location.id)),
     [compareIds, locations]
   );
-  const quickViewLocation = useMemo(
-    () => locations.find((location) => location.id === quickViewId) ?? null,
-    [locations, quickViewId]
-  );
 
   function handlePreferenceSubmit(values: Preferences) {
     setWizardPreferences(values);
     setActivePreferences(values);
-  }
-
-  function handleChangeFilters() {
-    setActivePreferences(null);
   }
 
   function toggleFavorite(id: string) {
@@ -175,10 +165,8 @@ export function SearchExperience() {
         <>
           <RecommendationResults
             recommendations={recommendations}
-            onChangeFilters={handleChangeFilters}
             onToggleFavorite={toggleFavorite}
             onToggleCompare={toggleCompare}
-            onQuickView={setQuickViewId}
             favoriteIds={favorites}
             compareIds={compareIds}
             guests={activePreferences.guests}
@@ -193,19 +181,6 @@ export function SearchExperience() {
       )}
 
       <AnimatePresence>
-        {quickViewLocation && activePreferences ? (
-          <QuickViewModal
-            location={quickViewLocation}
-            guests={activePreferences.guests}
-            budgetPerPerson={activePreferences.budgetPerPerson}
-            totalBudget={activePreferences.totalBudget}
-            isFavorite={favorites.includes(quickViewLocation.id)}
-            isComparing={compareIds.includes(quickViewLocation.id)}
-            onClose={() => setQuickViewId(null)}
-            onToggleFavorite={toggleFavorite}
-            onToggleCompare={toggleCompare}
-          />
-         ) : null}
       </AnimatePresence>
 
       {/* Sticky CTA Bar */}

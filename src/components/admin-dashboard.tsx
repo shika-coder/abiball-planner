@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useAdminAuth } from "@/lib/use-admin-auth";
 import { useState } from "react";
 import Link from "next/link";
@@ -13,6 +14,7 @@ import PriceManagementDashboard from "@/components/admin/price-management-dashbo
 type Section = "analytics" | "bookings" | "locations" | "social-proof" | "prices" | "venues";
 
 export function AdminDashboard() {
+  const router = useRouter();
   const { admin, loading, logout } = useAdminAuth();
   const [activeSection, setActiveSection] = useState<Section>("analytics");
 
@@ -27,6 +29,7 @@ export function AdminDashboard() {
   }
 
   if (!admin) {
+    router.push("/admin/login");
     return null;
   }
 

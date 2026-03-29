@@ -17,7 +17,7 @@ export function CompareDrawer({ locations, onRemove }: Props) {
 
   return (
     <motion.div
-      className="glass-panel fixed bottom-6 right-6 z-20 w-72 rounded-[20px] p-4"
+      className="glass-panel fixed bottom-6 right-6 z-20 w-72 sm:w-80 max-w-[calc(100vw-3rem)] rounded-[20px] p-4"
       initial={{ opacity: 0, y: 28 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.28, ease: "easeOut" }}
