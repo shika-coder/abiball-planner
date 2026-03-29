@@ -19,6 +19,13 @@ export function LandingPage() {
     viewport: { once: true, margin: "-100px" },
   };
 
+  const scrollToHowItWorks = () => {
+    const element = document.getElementById("how-it-works");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <div className="bg-white">
       {/* Hero Section */}
@@ -67,7 +74,10 @@ export function LandingPage() {
                   Jetzt planen starten
                 </button>
               </Link>
-              <button className="px-8 py-4 text-lg font-semibold rounded-xl border-2 border-slate-300 text-slate-900 hover:border-slate-400 transition duration-300 hover:scale-105 active:scale-95 w-full sm:w-auto">
+              <button 
+                onClick={scrollToHowItWorks}
+                className="px-8 py-4 text-lg font-semibold rounded-xl border-2 border-slate-300 text-slate-900 hover:border-slate-400 transition duration-300 hover:scale-105 active:scale-95 w-full sm:w-auto"
+              >
                 So funktioniert&apos;s
               </button>
             </div>
@@ -76,7 +86,7 @@ export function LandingPage() {
       </section>
 
       {/* How It Works */}
-      <section className="py-20 px-6 bg-white">
+      <section id="how-it-works" className="py-20 px-6 bg-white">
         <div className="max-w-5xl mx-auto">
           <motion.div
             className="text-center mb-16"
