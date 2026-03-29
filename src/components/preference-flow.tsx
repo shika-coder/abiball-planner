@@ -198,7 +198,7 @@ export function PreferenceFlow({ initialPreferences, onSubmit }: Props) {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.65 }}
-          className="flex flex-col gap-3 pt-2"
+          className="flex flex-col gap-3 pt-8"
         >
           <button
             type="submit"
