@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 
 export function LandingPage() {
   const fadeInUp = {
@@ -209,29 +210,38 @@ export function LandingPage() {
                 capacity: "300–800",
                 price: "€99 p.P.",
                 style: "Modern, Waterfront",
+                image: "/images/locations/fischauktionshalle-hamburg/main.jpg",
               },
               {
                 name: "Metallwerk Weißensee",
                 capacity: "400–1000",
                 price: "€105 p.P.",
                 style: "Industrial, Modern",
+                image: "/images/locations/edelfettwerk/main.jpg",
               },
               {
-                name: "Störtebeker Elbphilharmonie Sicht",
+                name: "Cruise Center Altona",
                 capacity: "250–600",
                 price: "€120 p.P.",
                 style: "Luxury, Waterfront",
+                image: "/images/locations/cruise-center-altona/main.jpg",
               },
             ].map((venue, index) => (
               <motion.div
                 key={index}
-                className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl p-8 hover:shadow-lg transition duration-300 border border-slate-200"
+                className="bg-white rounded-2xl overflow-hidden hover:shadow-lg transition duration-300 border border-slate-200"
                 variants={fadeInUp}
               >
-                <div className="space-y-4">
-                  <div className="h-40 bg-slate-300/30 rounded-lg flex items-center justify-center text-4xl">
-                    🏛️
-                  </div>
+                <div className="relative h-48 w-full">
+                  <Image
+                    src={venue.image}
+                    alt={venue.name}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                </div>
+                <div className="p-8 space-y-4">
                   <h3 className="text-xl font-semibold text-slate-900">
                     {venue.name}
                   </h3>
