@@ -1,5 +1,16 @@
 [
   {
+    "id": "lead_1774861600202",
+    "locationId": "schuppen-52",
+    "locationName": "Schuppen 52",
+    "name": "kolja",
+    "email": "kosadsad@asdad.com",
+    "schoolName": "fsdfasjdfh",
+    "guests": 400,
+    "preferredDate": "2027-11-11",
+    "createdAt": "2026-03-30T09:06:40.202Z"
+  },
+  {
     "id": "lead_1774736303501",
     "locationId": "hamburg-hafen-2-event-center",
     "locationName": "Hafen 2 Event Center",
