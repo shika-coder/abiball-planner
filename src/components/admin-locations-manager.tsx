@@ -71,7 +71,7 @@ export function AdminLocationsManager() {
 
   const broadcastLocationUpdate = () => {
     if (typeof BroadcastChannel !== "undefined") {
-      new BroadcastChannel("locations-updated").postMessage({ type: "updated" });
+      new BroadcastChannel("locations").postMessage({ type: "locations_updated" });
     }
   };
 

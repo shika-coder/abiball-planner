@@ -18,6 +18,13 @@ import { getLocations } from "@/lib/location-api";
 
 const stylePreferences: PreferenceFeature[] = ["Modern", "Industrial", "Luxury"];
 const stageKeywords: LocationFeature[] = ["Dance floor", "Stage / DJ equipment"];
+const defaultPreferences: Preferences = {
+  city: "Hamburg",
+  guests: DEFAULT_GUESTS,
+  budgetPerPerson: DEFAULT_BUDGET_PER_PERSON,
+  totalBudget: DEFAULT_TOTAL_BUDGET,
+  features: []
+};
 
 function countFeatureMatch(feature: PreferenceFeature, location: Location) {
   if (feature === "Waterfront") {
@@ -102,13 +109,6 @@ export function SearchExperience() {
   const [customLocations, setCustomLocations] = useState<Location[]>([]);
   const [filtersOpen, setFiltersOpen] = useState(false);
 
-  const defaultPreferences: Preferences = {
-    city: "Hamburg",
-    guests: DEFAULT_GUESTS,
-    budgetPerPerson: DEFAULT_BUDGET_PER_PERSON,
-    totalBudget: DEFAULT_TOTAL_BUDGET,
-    features: []
-  };
   const [wizardPreferences, setWizardPreferences] = useState<Preferences>(defaultPreferences);
   const [activePreferences, setActivePreferences] = useState<Preferences | null>(null);
 
@@ -133,7 +133,7 @@ export function SearchExperience() {
     setCompareIds(JSON.parse(localStorage.getItem(compareKey) || "[]") as string[]);
     setCustomLocations(JSON.parse(localStorage.getItem(customKey) || "[]") as Location[]);
 
-    const channel = typeof BroadcastChannel !== "undefined" ? new BroadcastChannel("locations-updated") : null;
+    const channel = typeof BroadcastChannel !== "undefined" ? new BroadcastChannel("locations") : null;
     channel?.addEventListener("message", loadLocations);
 
     return () => {

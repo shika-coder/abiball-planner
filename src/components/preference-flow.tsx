@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 
 import type { Preferences, PreferenceFeature } from "@/types/preferences";
@@ -25,6 +25,10 @@ export function PreferenceFlow({ initialPreferences, onSubmit, compact = false }
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const selectedFeatures = useMemo(() => new Set(values.features), [values.features]);
+
+  useEffect(() => {
+    setValues(initialPreferences);
+  }, [initialPreferences]);
 
   function toggleFeature(feature: PreferenceFeature) {
     setValues((current) => {
