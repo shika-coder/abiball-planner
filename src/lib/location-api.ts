@@ -13,6 +13,10 @@ export async function getLocations(): Promise<Location[]> {
     throw new Error("Unexpected response format");
   }
 
-  const data = (await response.json()) as { locations?: Location[] };
-  return (data.locations || []).filter(Boolean);
+  try {
+    const data = (await response.json()) as { locations?: Location[] };
+    return (data.locations || []).filter(Boolean);
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : "Failed to parse locations response");
+  }
 }

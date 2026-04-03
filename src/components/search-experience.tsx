@@ -144,6 +144,33 @@ export function SearchExperience() {
   }, []);
 
   useEffect(() => {
+    const refreshLocations = () => {
+      void getLocations()
+        .then((data) => {
+          setLocations(data);
+          setLocationsError(null);
+        })
+        .catch(() => {
+          setLocationsError("Failed to load locations");
+        });
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        refreshLocations();
+      }
+    };
+
+    window.addEventListener("focus", refreshLocations);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener("focus", refreshLocations);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
+
+  useEffect(() => {
     localStorage.setItem(favoritesKey, JSON.stringify(favorites));
   }, [favorites]);
 
@@ -241,6 +268,11 @@ export function SearchExperience() {
           </div>
         ) : (
           <>
+            {locationsError ? (
+              <div className="mt-8 rounded-[20px] border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+                {locationsError}
+              </div>
+            ) : null}
             {!activePreferences ? (
               <section className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
                 {allLocations.map((location) => (
