@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function AdminLoginPage() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -20,7 +20,7 @@ export default function AdminLoginPage() {
       const response = await fetch("/api/admin/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ username, password })
       });
 
       if (!response.ok) {
@@ -37,38 +37,40 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <main className="flex min-h-screen items-center justify-center px-6 py-12">
-      <div className="w-full max-w-md">
-        <div className="rounded-[34px] border border-slate-200 bg-white/80 p-8 shadow-lg backdrop-blur">
+    <main className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(15,23,42,0.12),_transparent_40%),linear-gradient(180deg,#f8fafc_0%,#ffffff_100%)] px-4 pb-10 pt-24 sm:px-6 lg:px-8">
+      <div className="mx-auto flex min-h-[calc(100vh-6rem)] w-full max-w-3xl items-center justify-center">
+        <div className="w-full max-w-md rounded-[34px] border border-slate-200 bg-white p-8 shadow-[0_30px_80px_rgba(15,23,42,0.08)]">
           <div className="mb-8 text-center">
             <p className="text-xs uppercase tracking-[0.35em] text-slate-400">Admin Access</p>
             <h1 className="mt-3 text-3xl font-bold text-slate-950">Login</h1>
+            <p className="mt-3 text-sm text-slate-600">Use your admin credentials to manage conversations and venues.</p>
           </div>
 
           {error && (
-            <div className="mb-6 rounded-[16px] bg-red-100 p-4 text-sm font-semibold text-red-800">
+            <div className="mb-6 rounded-[16px] border border-red-200 bg-red-50 p-4 text-sm font-semibold text-red-800">
               {error}
             </div>
           )}
 
           <form onSubmit={handleLogin} className="space-y-5">
             <div>
-              <label htmlFor="email" className="block text-sm font-semibold text-slate-950 mb-2">
-                Email
+              <label htmlFor="username" className="mb-2 block text-sm font-semibold text-slate-950">
+                Username or email
               </label>
               <input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@example.com"
+                id="username"
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="admin"
                 required
-                className="w-full rounded-[16px] border border-slate-300 bg-white px-4 py-3 text-slate-950 placeholder-slate-500 focus:border-slate-950 focus:outline-none"
+                autoComplete="username"
+                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-950 placeholder-slate-500 outline-none transition focus:border-slate-400 focus:bg-white focus:shadow-sm"
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-semibold text-slate-950 mb-2">
+              <label htmlFor="password" className="mb-2 block text-sm font-semibold text-slate-950">
                 Password
               </label>
               <input
@@ -78,14 +80,15 @@ export default function AdminLoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
                 required
-                className="w-full rounded-[16px] border border-slate-300 bg-white px-4 py-3 text-slate-950 placeholder-slate-500 focus:border-slate-950 focus:outline-none"
+                autoComplete="current-password"
+                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-950 placeholder-slate-500 outline-none transition focus:border-slate-400 focus:bg-white focus:shadow-sm"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-[16px] bg-slate-950 px-6 py-3 font-semibold text-white transition-all duration-300 hover:bg-slate-800 disabled:opacity-50"
+              className="w-full rounded-full bg-slate-950 px-6 py-3 font-semibold text-white shadow-sm transition-all duration-300 hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {loading ? "Logging in..." : "Login"}
             </button>

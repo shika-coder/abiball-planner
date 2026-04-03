@@ -1,11 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Navbar } from "@/components/navbar";
 import type { BookingRequest } from "@/types/booking";
 
 export default function Profile() {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<"profile" | "requests" | "favorites" | "security">("profile");
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -19,19 +21,13 @@ export default function Profile() {
     phone: ""
   });
 
-  useEffect(() => {
-    fetchProfile();
-  }, []);
-
-  useEffect(() => {
-    if (activeTab === "requests") {
-      fetchRequests();
-    }
-  }, [activeTab]);
-
-  async function fetchProfile() {
+  const fetchProfile = useCallback(async () => {
     try {
       const response = await fetch("/api/profile");
+      if (response.status === 401) {
+        router.push("/login");
+        return;
+      }
       if (response.ok) {
         const data = await response.json();
         setProfile({
@@ -47,12 +43,16 @@ export default function Profile() {
     } finally {
       setLoading(false);
     }
-  }
+  }, [router]);
 
-  async function fetchRequests() {
+  const fetchRequests = useCallback(async () => {
     setRequestsLoading(true);
     try {
       const response = await fetch("/api/bookings");
+      if (response.status === 401) {
+        router.push("/login");
+        return;
+      }
       if (response.ok) {
         const data = await response.json();
         setRequests(data.requests || []);
@@ -62,7 +62,17 @@ export default function Profile() {
     } finally {
       setRequestsLoading(false);
     }
-  }
+  }, [router]);
+
+  useEffect(() => {
+    fetchProfile();
+  }, [fetchProfile]);
+
+  useEffect(() => {
+    if (activeTab === "requests") {
+      fetchRequests();
+    }
+  }, [activeTab, fetchRequests]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

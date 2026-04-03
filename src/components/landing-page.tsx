@@ -1,10 +1,24 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import { getLocations } from "@/lib/location-api";
 
 export function LandingPage() {
+  const [featuredLocations, setFeaturedLocations] = useState<any[]>([]);
+  const [session, setSession] = useState<{ loggedIn: boolean } | null>(null);
+
+  useEffect(() => {
+    getLocations()
+      .then((locations) => setFeaturedLocations(locations.slice(0, 3)))
+      .catch(() => setFeaturedLocations([]));
+    fetch("/api/auth/session")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => setSession(data ? { loggedIn: true } : { loggedIn: false }))
+      .catch(() => setSession({ loggedIn: false }));
+  }, []);
   const fadeInUp = {
     initial: { opacity: 0, y: 20 },
     whileInView: { opacity: 1, y: 0 },
@@ -25,6 +39,8 @@ export function LandingPage() {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
+
+  const fallbackVenueImage = "/images/custom-venue-1.svg";
 
   return (
     <div className="bg-white">
@@ -82,6 +98,21 @@ export function LandingPage() {
               </button>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      <section className="px-6 pb-20">
+        <div className="mx-auto max-w-5xl rounded-[32px] border border-slate-200 bg-slate-950 px-8 py-10 text-white">
+          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+            <div className="max-w-2xl space-y-3">
+              <p className="text-sm uppercase tracking-[0.25em] text-slate-400">Support</p>
+              <h2 className="text-3xl font-bold">Chat with us like WhatsApp 💬</h2>
+              <p className="text-slate-300">Quick support for venues, planning, and booking questions. Logged-in users can message directly.</p>
+            </div>
+            <Link href={session?.loggedIn ? "/contact" : "/login"} className="inline-flex rounded-full bg-white px-6 py-3 font-semibold text-slate-950">
+              {session?.loggedIn ? "Open Chat" : "Login to contact us"}
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -214,29 +245,7 @@ export function LandingPage() {
             whileInView="whileInView"
             viewport={{ once: true, margin: "-100px" }}
           >
-            {[
-              {
-                name: "Fischauktionshalle",
-                capacity: "300–800",
-                price: "€99 p.P.",
-                style: "Modern, Waterfront",
-                image: "/images/locations/fischauktionshalle-hamburg/main.jpg",
-              },
-              {
-                name: "Metallwerk Weißensee",
-                capacity: "400–1000",
-                price: "€105 p.P.",
-                style: "Industrial, Modern",
-                image: "/images/locations/edelfettwerk/main.jpg",
-              },
-              {
-                name: "Cruise Center Altona",
-                capacity: "250–600",
-                price: "€120 p.P.",
-                style: "Luxury, Waterfront",
-                image: "/images/locations/cruise-center-altona/main.jpg",
-              },
-            ].map((venue, index) => (
+            {(featuredLocations.length > 0 ? featuredLocations : []).map((venue, index) => (
               <motion.div
                 key={index}
                 className="bg-white rounded-2xl overflow-hidden hover:shadow-lg transition duration-300 border border-slate-200"
@@ -244,7 +253,7 @@ export function LandingPage() {
               >
                 <div className="relative h-48 w-full">
                   <Image
-                    src={venue.image}
+                    src={venue.images?.[0] || fallbackVenueImage}
                     alt={venue.name}
                     fill
                     className="object-cover"
@@ -260,15 +269,20 @@ export function LandingPage() {
                       <strong>Kapazität:</strong> {venue.capacity}
                     </p>
                     <p className="text-slate-600">
-                      <strong>Preis:</strong> {venue.price}
+                      <strong>Preis:</strong> €{venue.pricePerPerson} p.P.
                     </p>
                     <p className="text-slate-600">
-                      <strong>Style:</strong> {venue.style}
+                      <strong>Style:</strong> {Array.isArray(venue.styleTags) ? venue.styleTags.join(", ") : venue.venueType}
                     </p>
                   </div>
                 </div>
               </motion.div>
             ))}
+            {featuredLocations.length === 0 && (
+              <div className="col-span-3 rounded-2xl border border-dashed border-slate-300 p-10 text-center text-slate-500">
+                No venues available yet.
+              </div>
+            )}
           </motion.div>
 
           <motion.div

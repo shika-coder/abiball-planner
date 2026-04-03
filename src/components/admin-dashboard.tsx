@@ -8,10 +8,10 @@ import { AdminBookingsManager } from "@/components/admin-bookings-manager";
 import { AdminLocationsManager } from "@/components/admin-locations-manager";
 import { AdminSocialProofManager } from "@/components/admin-social-proof-manager";
 import { AdminAnalytics } from "@/components/admin-analytics";
-import { AdminVenueSyncDashboard } from "@/components/admin-venue-sync";
 import PriceManagementDashboard from "@/components/admin/price-management-dashboard";
+import { AdminChatPanel } from "@/components/admin-chat-panel";
 
-type Section = "analytics" | "bookings" | "locations" | "social-proof" | "prices" | "venues";
+type Section = "analytics" | "bookings" | "locations" | "social-proof" | "prices" | "chat";
 
 export function AdminDashboard() {
   const router = useRouter();
@@ -37,9 +37,9 @@ export function AdminDashboard() {
     { id: "analytics", label: "Analytics", icon: "📊" },
     { id: "bookings", label: "Bookings", icon: "📋" },
     { id: "locations", label: "Locations", icon: "🏢" },
-    { id: "venues", label: "Venues", icon: "🌐" },
     { id: "prices", label: "Prices", icon: "💰" },
-    { id: "social-proof", label: "Social Proof", icon: "⭐" }
+    { id: "social-proof", label: "Social Proof", icon: "⭐" },
+    { id: "chat", label: "Chat", icon: "💬" }
   ];
 
   return (
@@ -79,9 +79,9 @@ export function AdminDashboard() {
         {activeSection === "analytics" && <AdminAnalytics />}
         {activeSection === "bookings" && <AdminBookingsManager />}
         {activeSection === "locations" && <AdminLocationsManager />}
-        {activeSection === "venues" && <AdminVenueSyncDashboard />}
         {activeSection === "prices" && <PriceManagementDashboard />}
         {activeSection === "social-proof" && <AdminSocialProofManager />}
+        {activeSection === "chat" && <AdminChatPanel />}
       </div>
     </main>
   );

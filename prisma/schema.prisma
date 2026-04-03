@@ -21,6 +21,7 @@ model User {
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   bookings  Booking[]
+  supportThreads SupportThread[]
 }
 
 model Admin {
@@ -89,6 +90,37 @@ model Location {
   @@index([city])
   @@index([featured])
   @@index([lastVerified])
+}
+
+model SupportThread {
+  id        String           @id @default(cuid())
+  userId    String
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subject   String
+  status    String           @default("open") // open, pending, closed
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  messages  SupportMessage[]
+
+  @@index([userId])
+  @@index([status])
+}
+
+model SupportMessage {
+  id        String         @id @default(cuid())
+  threadId  String
+  thread    SupportThread   @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  senderId  String?
+  senderRole String         // user, admin, system
+  body      String
+  status    String         @default("sent") // sent, delivered, seen
+  deliveredAt DateTime?
+  seenAt    DateTime?
+  createdAt DateTime       @default(now())
+
+  @@index([threadId])
+  @@index([createdAt])
+  @@index([status])
 }
 
 model SocialProofMetric {

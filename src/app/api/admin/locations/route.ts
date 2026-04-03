@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAdminAuth, successResponse, errorResponse } from "@/lib/admin-helpers";
+import { serializeArray } from "@/lib/venue-store";
 
 export async function GET(request: NextRequest) {
   const adminAuth = await requireAdminAuth(request);
@@ -51,10 +52,10 @@ export async function POST(request: NextRequest) {
         bookingLink: body.bookingLink || "",
         contactEmail: body.contactEmail || "",
         contactPhone: body.contactPhone || "",
-        features: JSON.stringify(body.features || []),
-        includedServices: JSON.stringify(body.includedServices || []),
-        styleTags: JSON.stringify(body.styleTags || []),
-        images: JSON.stringify(body.images || []),
+        features: serializeArray(body.features),
+        includedServices: serializeArray(body.includedServices),
+        styleTags: serializeArray(body.styleTags),
+        images: serializeArray(body.images),
         featured: body.featured || false
       }
     });
@@ -82,8 +83,8 @@ export async function PATCH(request: NextRequest) {
 
     Object.entries(body).forEach(([key, value]) => {
       if (key !== "id") {
-        if (jsonFields.includes(key) && typeof value === "object") {
-          updateData[key] = JSON.stringify(value);
+        if (jsonFields.includes(key)) {
+          updateData[key] = serializeArray(value);
         } else {
           updateData[key] = value;
         }

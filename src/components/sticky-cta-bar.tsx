@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
 
 import { BookingRequestButton } from "@/components/booking-request-button";
 import type { Recommendation } from "@/types/recommendation";
@@ -36,9 +37,11 @@ export function StickyCTABar({ recommendation, isVisible }: Props) {
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-4">
               {location.images[0] && (
-                <img
+                <Image
                   src={location.images[0]}
                   alt={location.name}
+                  width={64}
+                  height={64}
                   className="h-16 w-16 rounded-lg object-cover"
                 />
               )}

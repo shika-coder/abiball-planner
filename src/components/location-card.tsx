@@ -39,12 +39,13 @@ export function LocationCard({
 }: Props) {
   const status = getBudgetStatus(location, guests, totalBudget, budgetPerPerson);
   const valueScore = getValueScore(location);
+  const heroImage = location.images.find((image) => typeof image === "string" && image.trim().length > 0) || "/images/custom-venue-1.svg";
 
   return (
     <article className="glass-panel group animate-rise overflow-hidden rounded-[34px] transition duration-500 hover:-translate-y-2 hover:scale-[1.01] hover:shadow-[0_30px_90px_rgba(15,23,42,0.16)] flex flex-col h-full">
       <div className="relative h-72 overflow-hidden shrink-0">
         <Image
-          src={location.images[0]}
+          src={heroImage}
           alt={location.name}
           fill
           sizes="(max-width: 1280px) 100vw, 50vw"

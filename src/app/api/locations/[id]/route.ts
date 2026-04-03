@@ -1,17 +1,18 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { parseJsonArray } from "@/lib/venue-store";
 
-import { locations } from "@/data/locations";
-
-export async function GET(
-  _request: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  const { id } = await params;
-  const location = locations.find((entry) => entry.id === id);
-
+export async function GET(_: NextRequest, context: { params: Promise<{ id: string }> }) {
+  const { id } = await context.params;
+  const location = await prisma.location.findUnique({ where: { id } });
   if (!location) {
-    return NextResponse.json({ message: "Location not found" }, { status: 404 });
+    return NextResponse.json({ error: "Venue not found" }, { status: 404 });
   }
-
-  return NextResponse.json(location);
+  return NextResponse.json({
+    ...location,
+    features: parseJsonArray(location.features),
+    includedServices: parseJsonArray(location.includedServices),
+    styleTags: parseJsonArray(location.styleTags),
+    images: parseJsonArray(location.images)
+  });
 }

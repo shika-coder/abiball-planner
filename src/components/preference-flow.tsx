@@ -17,9 +17,10 @@ const preferenceOptions: PreferenceFeature[] = [
 type Props = {
   initialPreferences: Preferences;
   onSubmit: (preferences: Preferences) => void;
+  compact?: boolean;
 };
 
-export function PreferenceFlow({ initialPreferences, onSubmit }: Props) {
+export function PreferenceFlow({ initialPreferences, onSubmit, compact = false }: Props) {
   const [values, setValues] = useState(initialPreferences);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -46,10 +47,20 @@ export function PreferenceFlow({ initialPreferences, onSubmit }: Props) {
   }
 
   return (
-    <section className="fixed inset-0 z-50 flex items-center justify-center bg-white/20 px-8 py-12 backdrop-blur-sm">
+    <section
+      className={
+        compact
+          ? "rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm"
+          : "fixed inset-0 z-50 flex items-center justify-center bg-white/20 px-8 py-12 backdrop-blur-sm"
+      }
+    >
       <motion.form
         onSubmit={handleSubmit}
-        className="w-full max-w-4xl mx-8 space-y-8 rounded-[36px] border border-white/20 bg-gradient-to-br from-white via-slate-50/90 to-blue-50/50 p-12 shadow-[0_50px_150px_rgba(15,23,42,0.15)]"
+        className={
+          compact
+            ? "space-y-6"
+            : "w-full max-w-4xl mx-8 space-y-8 rounded-[36px] border border-white/20 bg-gradient-to-br from-white via-slate-50/90 to-blue-50/50 p-12 shadow-[0_50px_150px_rgba(15,23,42,0.15)]"
+        }
         initial={{ opacity: 0, scale: 0.96, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.4, ease: "easeOut" }}
