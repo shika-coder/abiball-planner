@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+
+import { DEFAULT_SOCIAL_PROOF_STATS } from "@/lib/defaults";
 import Image from "next/image";
 import { getLocations } from "@/lib/location-api";
 
@@ -315,10 +317,7 @@ export function LandingPage() {
             </div>
 
             <div className="grid md:grid-cols-2 gap-8">
-              {[
-                { stat: "20+", label: "Schulen und Klassen" },
-                { stat: "5000+", label: "Glückliche Gäste" },
-              ].map((item, index) => (
+              {DEFAULT_SOCIAL_PROOF_STATS.map((item, index) => (
                 <motion.div
                   key={index}
                   className="text-center p-8 bg-white rounded-2xl"
